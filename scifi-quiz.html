@@ -1,0 +1,621 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>~*~ THE COSMIC SCI-FI MATCH-O-TRON 3000 ~*~</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Righteous&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --neon:#00ffff;
+    --hot:#ff00ff;
+    --gold:#ffcc00;
+    --green:#00ff66;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:#05010f;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+      radial-gradient(2px 2px at 60% 70%, #fff, transparent),
+      radial-gradient(1px 1px at 50% 20%, #9cf, transparent),
+      radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+      radial-gradient(2px 2px at 90% 60%, #fcf, transparent),
+      radial-gradient(1px 1px at 33% 85%, #fff, transparent),
+      radial-gradient(2px 2px at 12% 65%, #ff9, transparent),
+      radial-gradient(1px 1px at 70% 40%, #fff, transparent);
+    background-size:200% 200%;
+    animation:starTwinkle 6s ease-in-out infinite;
+    color:#fff;
+    font-family:'Verdana','Geneva',sans-serif;
+    cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><circle cx="14" cy="14" r="9" fill="%2300ffff" opacity="0.5"/><circle cx="14" cy="14" r="4" fill="%23ff00ff" opacity="0.9"/></svg>'),auto;
+    overflow-x:hidden;
+  }
+  @keyframes starTwinkle{
+    0%,100%{background-position:0 0,40% 60%,50% 20%,80% 10%,90% 60%,33% 85%,12% 65%,70% 40%;}
+    50%{background-position:6% 8%,46% 66%,54% 24%,86% 16%,84% 54%,38% 92%,16% 70%,74% 46%;}
+  }
+  a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><polygon points="14,2 17,11 26,14 17,17 14,26 11,17 2,14 11,11" fill="%23ffff00"/></svg>'),pointer;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:14px;}
+
+  /* ---- marquee ---- */
+  .marquee{
+    overflow:hidden;background:#000;border:3px ridge var(--green);
+    box-shadow:0 0 16px rgba(0,255,102,.5);margin-bottom:14px;
+  }
+  .marquee span{
+    display:inline-block;white-space:nowrap;padding:7px 0;
+    font-family:'VT323',monospace;font-size:22px;color:var(--green);
+    text-shadow:0 0 6px var(--green);animation:marq 22s linear infinite;
+  }
+  @keyframes marq{from{transform:translateX(100%);}to{transform:translateX(-100%);}}
+
+  /* ---- panels ---- */
+  .panel{
+    background:linear-gradient(180deg,#1a0a36 0%,#0a0420 100%);
+    border:5px ridge var(--hot);
+    box-shadow:0 0 26px rgba(255,0,255,.45),inset 0 0 24px rgba(0,255,255,.12);
+    padding:22px;margin-bottom:16px;
+  }
+  .titlebar{
+    background:linear-gradient(180deg,#000080,#3030ff);
+    border:2px solid;border-color:#fff #000 #000 #fff;
+    color:#fff;font-weight:bold;font-family:'Righteous',sans-serif;
+    padding:5px 10px;margin:-22px -22px 16px -22px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;letter-spacing:1px;
+  }
+  .titlebar .x{
+    background:#c0c0c0;color:#000;border:2px outset #fff;
+    width:20px;height:18px;line-height:14px;text-align:center;font-size:11px;
+  }
+
+  h1.logo{
+    font-family:'Press Start 2P',cursive;
+    font-size:clamp(15px,4.6vw,30px);
+    line-height:1.5;text-align:center;margin:6px 0 4px;
+    background:linear-gradient(90deg,#ff0000,#ff7f00,#ffff00,#00ff00,#00ffff,#4b0082,#9400d3,#ff0000);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:rainbowShift 4s linear infinite;
+    filter:drop-shadow(2px 2px 0 #000);
+  }
+  @keyframes rainbowShift{to{background-position:200% center;}}
+  .sub{
+    text-align:center;font-family:'VT323',monospace;font-size:23px;
+    color:var(--neon);text-shadow:0 0 8px var(--neon);margin:0 0 6px;
+  }
+  .blink{animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  p.lede{font-size:15px;line-height:1.6;text-align:center;}
+  .center{text-align:center;}
+
+  /* ---- buttons ---- */
+  .btn{
+    display:inline-block;padding:14px 30px;margin:8px;
+    font-family:'Righteous',sans-serif;font-size:18px;color:#000;
+    text-shadow:1px 1px 0 rgba(255,255,255,.6);text-decoration:none;
+    background:linear-gradient(180deg,var(--gold) 0%,#ff9900 100%);
+    border:4px solid;border-color:#fff #7a4a00 #7a4a00 #fff;
+    box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),4px 4px 0 rgba(0,0,0,.4);
+    transition:transform .1s,filter .1s;min-height:48px;
+  }
+  .btn:hover{transform:scale(1.05);filter:brightness(1.12);}
+  .btn:active{transform:translate(2px,2px);border-color:#7a4a00 #fff #fff #7a4a00;}
+  .btn.alt{background:linear-gradient(180deg,#00ffff,#0080ff);color:#001;}
+  .btn.big{font-size:22px;padding:18px 40px;animation:glowPulse 1.6s ease-in-out infinite;}
+  @keyframes glowPulse{
+    0%,100%{box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),0 0 18px rgba(255,204,0,.8);}
+    50%{box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),0 0 38px rgba(255,204,0,1),0 0 60px rgba(255,0,255,.6);}
+  }
+
+  /* ---- hit counter ---- */
+  .counter{
+    display:inline-flex;gap:2px;padding:6px 9px;background:#000;
+    border:3px ridge #555;box-shadow:inset 0 0 10px rgba(0,255,0,.3);vertical-align:middle;
+  }
+  .counter .d{
+    width:18px;height:26px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#003300,#001100);border:1px solid var(--green);
+    color:var(--green);font-family:'Courier New',monospace;font-size:18px;font-weight:bold;
+    text-shadow:0 0 7px var(--green);
+  }
+  .smallcaps{font-family:'VT323',monospace;font-size:18px;color:#aaffcc;}
+
+  /* ---- quiz card ---- */
+  .progwrap{height:22px;background:#000;border:2px inset #888;margin-bottom:14px;position:relative;}
+  .progbar{height:100%;width:0;background:repeating-linear-gradient(90deg,#00ff66,#00ff66 10px,#00aa44 10px,#00aa44 20px);transition:width .25s;}
+  .progtxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'VT323',monospace;font-size:16px;color:#fff;text-shadow:1px 1px 2px #000;}
+
+  .bookq{text-align:center;}
+  .qgenre{display:inline-block;background:#000;border:2px solid var(--neon);color:var(--neon);
+    font-family:'VT323',monospace;font-size:17px;padding:3px 12px;margin-bottom:8px;text-shadow:0 0 5px var(--neon);text-transform:uppercase;letter-spacing:1px;}
+  .qtitle{font-family:'Righteous',sans-serif;font-size:clamp(22px,5.5vw,34px);margin:6px 0;
+    color:#fff;text-shadow:2px 2px 0 var(--hot),0 0 14px rgba(255,0,255,.6);}
+  .qmeta{font-family:'VT323',monospace;font-size:20px;color:var(--gold);margin-bottom:6px;}
+  .qblurb{font-size:14px;line-height:1.6;color:#dcd0ff;max-width:480px;margin:0 auto 16px;min-height:44px;}
+
+  .rates{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;}
+  .rate{
+    flex:1 1 130px;max-width:150px;padding:12px 6px;
+    background:linear-gradient(180deg,#3a1060,#1a0533);
+    border:3px outset #b060ff;color:#fff;font-family:'Righteous',sans-serif;font-size:15px;
+    box-shadow:2px 2px 0 rgba(0,0,0,.4);transition:transform .1s,filter .1s;min-height:64px;
+  }
+  .rate .em{display:block;font-size:26px;margin-bottom:3px;}
+  .rate:hover{transform:translateY(-3px);filter:brightness(1.25);border-color:#fff;}
+  .rate:active{transform:translateY(0);border-style:inset;}
+  .rate.skip{background:linear-gradient(180deg,#333,#111);border-color:#888;}
+
+  .navrow{display:flex;justify-content:space-between;margin-top:16px;gap:8px;}
+  .navrow .btn{font-size:14px;padding:9px 18px;margin:0;}
+
+  /* ---- results ---- */
+  .reccard{
+    text-align:left;background:linear-gradient(135deg,#140833,#241055);
+    border:4px ridge var(--gold);box-shadow:0 0 18px rgba(255,204,0,.4);
+    padding:16px;margin-bottom:14px;position:relative;overflow:hidden;
+  }
+  .reccard .rank{
+    position:absolute;top:-8px;right:-8px;background:var(--hot);color:#fff;
+    font-family:'Press Start 2P',cursive;font-size:13px;padding:10px 12px 8px;
+    transform:rotate(8deg);border:3px solid #fff;box-shadow:0 0 12px var(--hot);
+  }
+  .reccard h3{font-family:'Righteous',sans-serif;font-size:23px;margin:0 6px 4px 0;
+    color:var(--gold);text-shadow:0 0 10px rgba(255,204,0,.5);padding-right:60px;}
+  .reccard .rmeta{font-family:'VT323',monospace;font-size:19px;color:var(--neon);margin-bottom:8px;}
+  .reccard .rwhy{font-size:14px;line-height:1.6;color:#eee;}
+  .reccard .rwhy b{color:var(--green);}
+  .tagline{font-family:'VT323',monospace;font-size:20px;color:#ffd0ff;}
+
+  .profilebox{background:#000;border:3px inset #666;padding:12px;margin:8px 0 4px;
+    font-family:'VT323',monospace;font-size:19px;color:var(--green);text-shadow:0 0 5px var(--green);line-height:1.5;}
+
+  /* ---- footer / midi flavor ---- */
+  .midi{background:linear-gradient(180deg,#c0c0c0,#808080);border:3px ridge #fff;padding:12px;max-width:380px;margin:0 auto;box-shadow:4px 4px 0 rgba(0,0,0,.4);}
+  .midi .disp{background:#000;border:2px inset #555;padding:7px;color:var(--green);font-family:'Courier New',monospace;text-align:center;text-shadow:0 0 5px var(--green);font-size:13px;}
+  .midi .ctrls{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+  .midi .mb{width:44px;height:34px;background:linear-gradient(180deg,#e8e8e8,#a0a0a0);border:2px outset #fff;font-size:15px;color:#000;}
+  .midi .mb:active{border-style:inset;}
+  .midi .bar{height:8px;background:#000;border:2px inset #555;margin-top:8px;overflow:hidden;}
+  .midi .barfill{height:100%;width:30%;background:linear-gradient(90deg,#00ff00,#00aa00);animation:midip 4s linear infinite;}
+  @keyframes midip{from{transform:translateX(-100%);}to{transform:translateX(400%);}}
+
+  footer{text-align:center;font-family:'VT323',monospace;font-size:17px;color:#9988cc;padding:18px 0 30px;line-height:1.7;}
+  .construction{font-family:'Press Start 2P',cursive;font-size:9px;color:#000;background:repeating-linear-gradient(45deg,#ffcc00,#ffcc00 14px,#000 14px,#000 28px);
+    padding:8px;color:#fff;text-shadow:1px 1px 2px #000;border:2px solid #ff0000;margin:10px auto;display:inline-block;}
+
+  .hidden{display:none;}
+  .pop{animation:pop .3s ease;}
+  @keyframes pop{0%{transform:scale(.96);opacity:.4;}100%{transform:scale(1);opacity:1;}}
+
+  @media (max-width:520px){
+    .panel{padding:16px;} .titlebar{margin:-16px -16px 14px -16px;}
+    .rate{flex:1 1 44%;max-width:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="marquee"><span>★彡 WELCOME TRAVELER 彡★ &nbsp; rate the books you know &nbsp;⟶&nbsp; the MATCH-O-TRON computes your destiny &nbsp;⟶&nbsp; 3 perfect sci-fi reads await &nbsp;★彡 best viewed at 800x600 with Netscape Navigator 彡★ &nbsp; ⊹ ⋆ ✦ ⊹ ⋆ ✦ ⊹ &nbsp;</span></div>
+
+  <!-- ============ INTRO ============ -->
+  <div id="intro" class="panel">
+    <div class="titlebar"><span>◆ matchotron3000.exe</span><span class="x">×</span></div>
+    <h1 class="logo">THE COSMIC SCI-FI MATCH-O-TRON 3000</h1>
+    <div class="sub">▓ what should you read next? ▓ <span class="blink">_</span></div>
+    <p class="lede">Greetings, carbon-based reader! 🛸 Tell our totally-legit super-computer how you feel about a handful of famous sci-fi novels, and it will scan your <b style="color:var(--gold)">brain-vibes</b> to recommend <b style="color:var(--neon)">3 books</b> from a galaxy of 100 to read next.</p>
+    <div class="center">
+      <span class="construction">⚠ UNDER CONSTRUCTION SINCE 1997 ⚠</span>
+    </div>
+    <div class="center" style="margin-top:6px;">
+      <button class="btn big" onclick="startQuiz()">🚀 START THE SCAN 🚀</button>
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <span class="smallcaps">readers scanned: </span>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <!-- ============ QUIZ ============ -->
+  <div id="quiz" class="panel hidden">
+    <div class="titlebar"><span>◆ scanning_brain.dll</span><span class="x">×</span></div>
+    <div class="progwrap"><div class="progbar" id="progbar"></div><div class="progtxt" id="progtxt"></div></div>
+    <div class="bookq" id="bookq"><!-- filled by JS --></div>
+    <div class="navrow">
+      <button class="btn alt" onclick="prevBook()" id="backbtn">◄ BACK</button>
+      <span class="smallcaps" style="align-self:center;">pick a reaction to continue ⟶</span>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS ============ -->
+  <div id="results" class="panel hidden">
+    <div class="titlebar"><span>◆ destiny_results.html</span><span class="x">×</span></div>
+    <h1 class="logo" style="font-size:clamp(13px,3.8vw,22px);">✦ YOUR TOP 3 MATCHES ✦</h1>
+    <p class="tagline center" id="verdict"></p>
+    <div id="recs"></div>
+    <div class="profilebox" id="profile"></div>
+    <div class="center" style="margin-top:14px;">
+      <button class="btn" onclick="startQuiz()">↺ SCAN AGAIN</button>
+      <button class="btn alt" onclick="resetAll()">⌂ HOME</button>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="midi">
+    <div class="disp" id="mididisp">♫ now playing: spacetheme_loop.mid</div>
+    <div class="ctrls">
+      <button class="mb" onclick="midiMsg('⏮ rewinding...')">⏮</button>
+      <button class="mb" onclick="midiMsg('▶ vibing...')">▶</button>
+      <button class="mb" onclick="midiMsg('⏸ paused')">⏸</button>
+      <button class="mb" onclick="midiMsg('⏭ next track')">⏭</button>
+    </div>
+    <div class="bar"><div class="barfill"></div></div>
+  </div>
+
+  <footer>
+    ✉ sign my guestbook! &nbsp;•&nbsp; 🌐 part of the SCI-FI WEBRING 🌐<br>
+    © 19XX–20XX · no books were harmed in the making of this quiz<br>
+    <span style="color:#556;">100% of recommendations sourced from a hand-curated diverse reading list</span>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   DATA — all 100 novels, tagged so recommendations can be
+   drawn from the FULL list (not just the quiz subset).
+   ========================================================= */
+const BOOKS = [
+ {id:1,t:"Frankenstein",a:"Mary Shelley",y:1818,g:"Gothic / Proto-SF",b:"The original — a scientist plays god and reaps the consequences.",tags:["classic","philosophical","literary","cerebral","aiconsciousness"]},
+ {id:2,t:"Twenty Thousand Leagues Under the Sea",a:"Jules Verne",y:1870,g:"Adventure",b:"Captain Nemo's submarine voyage; foundational gadget-adventure.",tags:["classic","adventure","translated","action","hardsf"]},
+ {id:3,t:"The Time Machine",a:"H.G. Wells",y:1895,g:"Time Travel",b:"The book that defined what a time-travel story even is.",tags:["classic","timetravel","cerebral","socialsf"]},
+ {id:4,t:"The War of the Worlds",a:"H.G. Wells",y:1898,g:"Alien Invasion",b:"Martians invade Earth — the template every invasion story copies.",tags:["classic","firstcontact","action","militarysf"]},
+ {id:5,t:"We",a:"Yevgeny Zamyatin",y:1924,g:"Dystopia",b:"The Russian dystopia that inspired Orwell and Huxley.",tags:["dystopia","translated","classic","political","cerebral"]},
+ {id:6,t:"Brave New World",a:"Aldous Huxley",y:1932,g:"Dystopia",b:"A society pacified by pleasure rather than fear.",tags:["dystopia","classic","socialsf","philosophical"]},
+ {id:7,t:"Nineteen Eighty-Four",a:"George Orwell",y:1949,g:"Dystopia",b:"Big Brother, doublethink, and total surveillance.",tags:["dystopia","classic","political","bleak"]},
+ {id:8,t:"The Martian Chronicles",a:"Ray Bradbury",y:1950,g:"Colonization",b:"Lyrical, melancholy linked tales of humanity on Mars.",tags:["classic","literary","socialsf","emotional"]},
+ {id:9,t:"Foundation",a:"Isaac Asimov",y:1951,g:"Space Opera",b:"A mathematician predicts the fall of a galactic empire.",tags:["spaceopera","classic","cerebral","political"]},
+ {id:10,t:"The Day of the Triffids",a:"John Wyndham",y:1951,g:"Post-Apocalyptic",b:"Mass blindness and walking killer plants; the cosy catastrophe.",tags:["postapoc","classic","action"]},
+ {id:11,t:"Fahrenheit 451",a:"Ray Bradbury",y:1953,g:"Dystopia",b:"A fireman who burns books begins to question everything.",tags:["dystopia","classic","literary","socialsf"]},
+ {id:12,t:"More Than Human",a:"Theodore Sturgeon",y:1953,g:"Social SF",b:"Outcasts merge into a single, gentle collective being.",tags:["socialsf","classic","emotional","philosophical"]},
+ {id:13,t:"The Stars My Destination",a:"Alfred Bester",y:1956,g:"Proto-Cyberpunk",b:"A brutal revenge tale in a world of teleportation.",tags:["cyberpunk","classic","action","adventure"]},
+ {id:14,t:"A Canticle for Leibowitz",a:"Walter M. Miller Jr.",y:1959,g:"Post-Apocalyptic",b:"Monks preserve knowledge across millennia after the bombs.",tags:["postapoc","classic","philosophical","cerebral"]},
+ {id:15,t:"Solaris",a:"Stanisław Lem",y:1961,g:"First Contact",b:"A sentient ocean confronts humans with their own ghosts.",tags:["firstcontact","translated","cerebral","philosophical","bleak"]},
+ {id:16,t:"Stranger in a Strange Land",a:"Robert A. Heinlein",y:1961,g:"Social SF",b:"A human raised by Martians upends Earth's culture.",tags:["socialsf","classic","philosophical"]},
+ {id:17,t:"A Wrinkle in Time",a:"Madeleine L'Engle",y:1962,g:"Young Adult",b:"Kids fold spacetime to rescue a lost father; cosmic and warm.",tags:["ya","sciencefantasy","hopeful","adventure"]},
+ {id:18,t:"Dune",a:"Frank Herbert",y:1965,g:"Space Opera",b:"Desert ecology, prophecy, and empire on the planet Arrakis.",tags:["spaceopera","political","philosophical","adventure"]},
+ {id:19,t:"Babel-17",a:"Samuel R. Delany",y:1966,g:"Linguistics SF",b:"A poet decodes a language that's secretly a weapon.",tags:["socialsf","cerebral","spaceopera"]},
+ {id:20,t:"Flowers for Algernon",a:"Daniel Keyes",y:1966,g:"Social SF",b:"A man's intelligence is surgically boosted — then fades.",tags:["socialsf","emotional","literary"]},
+ {id:21,t:"Lord of Light",a:"Roger Zelazny",y:1967,g:"Science Fantasy",b:"Colonists pose as Hindu gods using advanced tech.",tags:["sciencefantasy","philosophical","action"]},
+ {id:22,t:"Do Androids Dream of Electric Sheep?",a:"Philip K. Dick",y:1968,g:"Cyberpunk Precursor",b:"A bounty hunter chases androids and questions what's real (basis for Blade Runner).",tags:["cyberpunk","aiconsciousness","philosophical","cerebral"]},
+ {id:23,t:"2001: A Space Odyssey",a:"Arthur C. Clarke",y:1968,g:"Hard SF",b:"Evolution, a murderous AI, and pure cosmic awe.",tags:["hardsf","aiconsciousness","cerebral","classic"]},
+ {id:24,t:"The Left Hand of Darkness",a:"Ursula K. Le Guin",y:1969,g:"Social SF",b:"An envoy on a world with no fixed gender; a landmark.",tags:["socialsf","feminist","cerebral","literary"]},
+ {id:25,t:"Ringworld",a:"Larry Niven",y:1970,g:"Hard SF",b:"Explorers map a ribbon-world the size of an orbit.",tags:["hardsf","spaceopera","adventure","cerebral"]},
+ {id:26,t:"Roadside Picnic",a:"Arkady & Boris Strugatsky",y:1972,g:"First Contact",b:"Scavengers risk death for alien junk nobody understands.",tags:["firstcontact","translated","weird","bleak"]},
+ {id:27,t:"The Dispossessed",a:"Ursula K. Le Guin",y:1974,g:"Social SF",b:"A physicist travels between a rich world and an anarchist moon.",tags:["socialsf","political","philosophical","literary"]},
+ {id:28,t:"The Forever War",a:"Joe Haldeman",y:1974,g:"Military SF",b:"A soldier returns from relativistic war to a world that forgot him.",tags:["militarysf","spaceopera","political","emotional"]},
+ {id:29,t:"The Female Man",a:"Joanna Russ",y:1975,g:"Feminist SF",b:"Four versions of one woman across four wildly different worlds.",tags:["feminist","socialsf","literary","weird","experimental"]},
+ {id:30,t:"Dhalgren",a:"Samuel R. Delany",y:1975,g:"Experimental",b:"A dense, looping descent into a broken American city.",tags:["literary","weird","experimental","cerebral"]},
+ {id:31,t:"Where Late the Sweet Birds Sang",a:"Kate Wilhelm",y:1976,g:"Post-Apocalyptic",b:"Survivors clone themselves — and slowly lose their humanity.",tags:["postapoc","socialsf","emotional"]},
+ {id:32,t:"Dreamsnake",a:"Vonda N. McIntyre",y:1978,g:"Post-Apocalyptic",b:"A wandering healer seeks a lost serpent; tender and hopeful.",tags:["postapoc","adventure","feminist","hopeful"]},
+ {id:33,t:"Kindred",a:"Octavia E. Butler",y:1979,g:"Time Travel",b:"A Black woman is yanked back to an antebellum plantation.",tags:["timetravel","emotional","literary","afrofuturism","political"]},
+ {id:34,t:"The Hitchhiker's Guide to the Galaxy",a:"Douglas Adams",y:1979,g:"Comedy",b:"Earth is demolished for a bypass; absurd cosmic comedy ensues.",tags:["comedy","spaceopera","adventure"]},
+ {id:35,t:"Downbelow Station",a:"C.J. Cherryh",y:1981,g:"Space Opera",b:"War and politics swirl around a single contested space station.",tags:["spaceopera","political","militarysf"]},
+ {id:36,t:"Neuromancer",a:"William Gibson",y:1984,g:"Cyberpunk",b:"A washed-up hacker takes one last job in cyberspace.",tags:["cyberpunk","action","cerebral"]},
+ {id:37,t:"Hard-Boiled Wonderland and the End of the World",a:"Haruki Murakami",y:1985,g:"Surreal SF",b:"Two dreamlike narratives braid through one fractured mind.",tags:["literary","weird","translated","cerebral"]},
+ {id:38,t:"The Handmaid's Tale",a:"Margaret Atwood",y:1985,g:"Dystopia",b:"A theocracy reduces women to reproductive property.",tags:["dystopia","feminist","political","bleak","literary"]},
+ {id:39,t:"Ender's Game",a:"Orson Scott Card",y:1985,g:"Military SF",b:"A gifted child is trained through games to fight an alien war.",tags:["militarysf","ya","action","emotional"]},
+ {id:40,t:"Dawn",a:"Octavia E. Butler",y:1987,g:"First Contact",b:"Aliens rescue humanity — at the price of changing what we are.",tags:["firstcontact","afrofuturism","philosophical","emotional"]},
+ {id:41,t:"Consider Phlebas",a:"Iain M. Banks",y:1987,g:"Space Opera",b:"A shapeshifting mercenary races across a galactic war; the Culture begins.",tags:["spaceopera","action","adventure"]},
+ {id:42,t:"The Player of Games",a:"Iain M. Banks",y:1988,g:"Space Opera",b:"A master gamer is sent to topple an empire ruled by a single game.",tags:["spaceopera","political","cerebral"]},
+ {id:43,t:"Hyperion",a:"Dan Simmons",y:1989,g:"Space Opera",b:"Seven pilgrims tell their tales en route to a deadly relic.",tags:["spaceopera","literary","cerebral","emotional"]},
+ {id:44,t:"Barrayar",a:"Lois McMaster Bujold",y:1991,g:"Space Opera",b:"Court intrigue and motherhood under fire in the Vorkosigan saga.",tags:["spaceopera","political","emotional","feminist"]},
+ {id:45,t:"Red Mars",a:"Kim Stanley Robinson",y:1992,g:"Hard SF",b:"The definitive epic of terraforming and colonizing Mars.",tags:["hardsf","climate","political","cerebral"]},
+ {id:46,t:"Snow Crash",a:"Neal Stephenson",y:1992,g:"Cyberpunk",b:"A pizza-delivering hacker, a sword, and a viral metaverse.",tags:["cyberpunk","action","comedy"]},
+ {id:47,t:"Doomsday Book",a:"Connie Willis",y:1992,g:"Time Travel",b:"A historian is stranded in plague-stricken medieval England.",tags:["timetravel","emotional","literary","bleak"]},
+ {id:48,t:"A Fire Upon the Deep",a:"Vernor Vinge",y:1992,g:"Space Opera",b:"A galaxy of tiered intelligence and brilliant alien pack-minds.",tags:["spaceopera","hardsf","firstcontact","cerebral"]},
+ {id:49,t:"Parable of the Sower",a:"Octavia E. Butler",y:1993,g:"Climate Dystopia",b:"A young prophet builds hope amid near-future American collapse.",tags:["climate","dystopia","afrofuturism","emotional","postapoc"]},
+ {id:50,t:"Beggars in Spain",a:"Nancy Kress",y:1993,g:"Biopunk",b:"Engineered humans who never sleep reshape society.",tags:["biopunk","socialsf","political","cerebral"]},
+ {id:51,t:"The Memory Police",a:"Yoko Ogawa",y:1994,g:"Dystopia",b:"On an island, objects — and memories of them — quietly vanish.",tags:["dystopia","translated","literary","bleak","weird"]},
+ {id:52,t:"The Sparrow",a:"Mary Doria Russell",y:1996,g:"First Contact",b:"A Jesuit-led mission to an alien world ends in tragedy.",tags:["firstcontact","emotional","philosophical","bleak"]},
+ {id:53,t:"Brown Girl in the Ring",a:"Nalo Hopkinson",y:1998,g:"Caribbean SF",b:"Afro-Caribbean spirit-lore in a collapsed near-future Toronto.",tags:["afrofuturism","postapoc","weird","action"]},
+ {id:54,t:"Perdido Street Station",a:"China Miéville",y:2000,g:"New Weird",b:"A gloriously strange city of bug-people, science, and dread.",tags:["newweird","weird","action","literary"]},
+ {id:55,t:"Revelation Space",a:"Alastair Reynolds",y:2000,g:"Hard SF Space Opera",b:"Gothic, far-future hard SF on a colossal, lonely scale.",tags:["hardsf","spaceopera","cerebral","bleak"]},
+ {id:56,t:"Oryx and Crake",a:"Margaret Atwood",y:2003,g:"Biopunk Dystopia",b:"The last man recalls the genetic engineering that ended the world.",tags:["biopunk","dystopia","climate","literary","bleak"]},
+ {id:57,t:"Cloud Atlas",a:"David Mitchell",y:2004,g:"Literary SF",b:"Six nested lives echo across centuries, past to far future.",tags:["literary","philosophical","timetravel","cerebral"]},
+ {id:58,t:"Never Let Me Go",a:"Kazuo Ishiguro",y:2005,g:"Literary SF",b:"Boarding-school friends face a quietly devastating purpose.",tags:["literary","emotional","bleak","biopunk"]},
+ {id:59,t:"Old Man's War",a:"John Scalzi",y:2005,g:"Military SF",b:"The elderly are recruited into youthful bodies for interstellar war.",tags:["militarysf","spaceopera","action","comedy"]},
+ {id:60,t:"Accelerando",a:"Charles Stross",y:2005,g:"Hard SF",b:"A breakneck dynasty-spanning ride through the Singularity.",tags:["hardsf","cyberpunk","cerebral","aiconsciousness"]},
+ {id:61,t:"Blindsight",a:"Peter Watts",y:2006,g:"Hard SF",b:"A crew meets aliens that may be intelligent without consciousness.",tags:["hardsf","firstcontact","aiconsciousness","cerebral","bleak"]},
+ {id:62,t:"The Road",a:"Cormac McCarthy",y:2006,g:"Post-Apocalyptic",b:"A father and son walk a dead world; spare and shattering.",tags:["postapoc","literary","bleak","emotional"]},
+ {id:63,t:"World War Z",a:"Max Brooks",y:2006,g:"Apocalyptic",b:"An oral history of humanity's war against the zombie plague.",tags:["postapoc","action","political"]},
+ {id:64,t:"The Three-Body Problem",a:"Liu Cixin",y:2008,g:"Hard SF",b:"A signal to the stars invites a civilization's reply; first Chinese Hugo.",tags:["hardsf","firstcontact","translated","cerebral","political"]},
+ {id:65,t:"The Hunger Games",a:"Suzanne Collins",y:2008,g:"YA Dystopia",b:"Teens fight to the death on live TV; the modern YA benchmark.",tags:["ya","dystopia","action"]},
+ {id:66,t:"The Windup Girl",a:"Paolo Bacigalupi",y:2009,g:"Climate / Biopunk",b:"Corporate gene-pirates and engineered life in post-oil Thailand.",tags:["climate","biopunk","political","bleak"]},
+ {id:67,t:"The City & the City",a:"China Miéville",y:2009,g:"Weird SF",b:"A murder spans two cities that occupy the very same streets.",tags:["newweird","weird","cerebral","literary"]},
+ {id:68,t:"Who Fears Death",a:"Nnedi Okorafor",y:2010,g:"Africanfuturism",b:"A girl of prophecy and magic in a post-apocalyptic Sudan.",tags:["afrofuturism","sciencefantasy","postapoc","emotional"]},
+ {id:69,t:"Leviathan Wakes",a:"James S.A. Corey",y:2011,g:"Space Opera",b:"Noir detective work meets hard SF across the solar system (The Expanse).",tags:["spaceopera","action","adventure","hardsf"]},
+ {id:70,t:"The Martian",a:"Andy Weir",y:2011,g:"Hard SF",b:"Stranded on Mars, an astronaut science-es his way to survival.",tags:["hardsf","action","comedy","hopeful"]},
+ {id:71,t:"Ready Player One",a:"Ernest Cline",y:2011,g:"Cyberpunk / VR",b:"A treasure hunt through a pop-culture-soaked virtual world.",tags:["cyberpunk","ya","action","adventure"]},
+ {id:72,t:"Ancillary Justice",a:"Ann Leckie",y:2013,g:"Space Opera",b:"A starship's AI, now in one human body, seeks revenge; swept the awards.",tags:["spaceopera","aiconsciousness","political","cerebral"]},
+ {id:73,t:"Waste Tide",a:"Chen Qiufan",y:2013,g:"Climate Cyberpunk",b:"Migrant workers and rebellion on a toxic e-waste island.",tags:["climate","cyberpunk","translated","political"]},
+ {id:74,t:"Annihilation",a:"Jeff VanderMeer",y:2014,g:"New Weird / Eco-Horror",b:"A doomed expedition into the uncanny, transforming Area X.",tags:["newweird","weird","firstcontact","bleak"]},
+ {id:75,t:"Station Eleven",a:"Emily St. John Mandel",y:2014,g:"Post-Apocalyptic",b:"A traveling theater troupe keeps art alive after a pandemic.",tags:["postapoc","literary","emotional","hopeful"]},
+ {id:76,t:"The Long Way to a Small, Angry Planet",a:"Becky Chambers",y:2014,g:"Cosy Space Opera",b:"A warm, found-family crew aboard a ramshackle tunneling ship.",tags:["spaceopera","hopeful","emotional","cosy"]},
+ {id:77,t:"Red Rising",a:"Pierce Brown",y:2014,g:"Space Opera / Dystopia",b:"A lowborn miner infiltrates the elite to spark revolution on Mars.",tags:["spaceopera","dystopia","action","ya"]},
+ {id:78,t:"The Fifth Season",a:"N.K. Jemisin",y:2015,g:"Science Fantasy",b:"A mother hunts her family as the world literally breaks apart.",tags:["sciencefantasy","emotional","political","afrofuturism"]},
+ {id:79,t:"Children of Time",a:"Adrian Tchaikovsky",y:2015,g:"Hard SF",b:"Uplifted spiders inherit a planet across the deep future.",tags:["hardsf","firstcontact","cerebral","spaceopera"]},
+ {id:80,t:"Central Station",a:"Lavie Tidhar",y:2016,g:"Space Opera",b:"A mosaic of lives around a future spaceport above Tel Aviv.",tags:["spaceopera","literary","weird"]},
+ {id:81,t:"Ninefox Gambit",a:"Yoon Ha Lee",y:2016,g:"Military Space Opera",b:"Battle-math and a dead general's ghost wage war on calendars.",tags:["militarysf","spaceopera","cerebral","weird"]},
+ {id:82,t:"All the Birds in the Sky",a:"Charlie Jane Anders",y:2016,g:"Science Fantasy",b:"A witch and a techno-genius love each other as the world ends.",tags:["sciencefantasy","emotional","climate","hopeful"]},
+ {id:83,t:"Too Like the Lightning",a:"Ada Palmer",y:2016,g:"Philosophical SF",b:"A dense, gender-bending Enlightenment-flavored 25th-century utopia.",tags:["philosophical","political","cerebral","literary"]},
+ {id:84,t:"Rosewater",a:"Tade Thompson",y:2016,g:"Africanfuturism",b:"A psychic and a slow alien invasion remake a Nigerian boomtown.",tags:["afrofuturism","firstcontact","weird","biopunk"]},
+ {id:85,t:"The Power",a:"Naomi Alderman",y:2016,g:"Speculative",b:"Women gain the power to deal electric shocks — and the world flips.",tags:["feminist","dystopia","political","literary"]},
+ {id:86,t:"Vagabonds",a:"Hao Jingfang",y:2016,g:"Social SF",b:"A young returnee is caught between Mars and Earth's rival systems.",tags:["socialsf","translated","political","philosophical"]},
+ {id:87,t:"An Unkindness of Ghosts",a:"Rivers Solomon",y:2017,g:"Generation Ship",b:"Plantation-style oppression aboard a centuries-old starship.",tags:["spaceopera","political","afrofuturism","emotional"]},
+ {id:88,t:"All Systems Red",a:"Martha Wells",y:2017,g:"Space Opera (Murderbot)",b:"A wry, anxious security android would rather watch TV than save you.",tags:["spaceopera","aiconsciousness","comedy","action"]},
+ {id:89,t:"The Marrow Thieves",a:"Cherie Dimaline",y:2017,g:"YA Dystopia / Indigenous",b:"Indigenous youth flee those who would harvest their dreams.",tags:["ya","dystopia","indigenous","emotional","postapoc"]},
+ {id:90,t:"Trail of Lightning",a:"Rebecca Roanhorse",y:2018,g:"Post-Apocalyptic / Indigenous",b:"A Diné monster-hunter stalks a flooded, mythic Southwest.",tags:["postapoc","sciencefantasy","indigenous","action"]},
+ {id:91,t:"A Memory Called Empire",a:"Arkady Martine",y:2019,g:"Space Opera",b:"An ambassador navigates seductive imperial politics and lost identity.",tags:["spaceopera","political","cerebral","emotional"]},
+ {id:92,t:"Exhalation",a:"Ted Chiang",y:2019,g:"Hard SF (stories)",b:"Humane, mind-expanding short fiction built on single big ideas.",tags:["hardsf","cerebral","philosophical","emotional"]},
+ {id:93,t:"Gideon the Ninth",a:"Tamsyn Muir",y:2019,g:"Science Fantasy",b:"Lesbian necromancers solve a locked-room mystery in space.",tags:["sciencefantasy","action","comedy","emotional"]},
+ {id:94,t:"The Ministry for the Future",a:"Kim Stanley Robinson",y:2020,g:"Climate Fiction",b:"A near-future blueprint for actually surviving climate collapse.",tags:["climate","political","hardsf","hopeful"]},
+ {id:95,t:"Riot Baby",a:"Tochi Onyebuchi",y:2020,g:"Near-Future",b:"Siblings with terrifying power confront American racism and rage.",tags:["afrofuturism","political","emotional","bleak"]},
+ {id:96,t:"Klara and the Sun",a:"Kazuo Ishiguro",y:2021,g:"Literary SF",b:"A solar-powered companion robot studies human love and devotion.",tags:["literary","aiconsciousness","emotional","hopeful"]},
+ {id:97,t:"How High We Go in the Dark",a:"Sequoia Nagamatsu",y:2022,g:"Pandemic SF",b:"Linked, elegiac stories of grief in the wake of a plague.",tags:["postapoc","literary","emotional","bleak"]},
+ {id:98,t:"The Mountain in the Sea",a:"Ray Nayler",y:2022,g:"First Contact",b:"Octopus intelligence forces a rethink of what communication means.",tags:["firstcontact","hardsf","aiconsciousness","cerebral"]},
+ {id:99,t:"Some Desperate Glory",a:"Emily Tesh",y:2023,g:"Military Space Opera",b:"A radicalized soldier unlearns the propaganda that raised her.",tags:["militarysf","spaceopera","action","emotional"]},
+ {id:100,t:"The Ministry of Time",a:"Kaliane Bradley",y:2024,g:"Time Travel",b:"A breakout blend of time travel, romance, empire, and bureaucracy.",tags:["timetravel","emotional","literary","political"]}
+];
+
+/* The subset shown for rating — chosen to span subgenres & tones. */
+const QUIZ_IDS = [1,18,22,24,33,36,38,70,64,49,76,78,88,34];
+
+/* Rating weights */
+const RATINGS = [
+  {key:"love", em:"❤️", label:"OBSESSED",  w:2},
+  {key:"like", em:"👍", label:"Liked it",  w:1},
+  {key:"meh",  em:"🤷", label:"Meh",        w:0},
+  {key:"nope", em:"👎", label:"Not for me", w:-1},
+  {key:"skip", em:"❔", label:"Haven't read",w:null}
+];
+
+/* Friendly names for taste-profile readout */
+const TAGNAMES = {
+  hardsf:"🔬 hard science", spaceopera:"🚀 space opera", cyberpunk:"🕶 cyberpunk",
+  dystopia:"🏚 dystopia", climate:"🌎 climate fiction", afrofuturism:"✊🏿 Afro/Africanfuturism",
+  firstcontact:"👽 first contact", timetravel:"⏳ time travel", biopunk:"🧬 biopunk",
+  militarysf:"🪖 military SF", newweird:"🌀 the New Weird", weird:"🌀 weird & surreal",
+  ya:"🎒 YA energy", literary:"📖 literary SF", postapoc:"☢️ post-apocalypse",
+  socialsf:"🧠 sociological SF", comedy:"😂 comedy", sciencefantasy:"🐉 science fantasy",
+  classic:"🏛 the classics", feminist:"♀ feminist SF", philosophical:"🤔 philosophy",
+  cerebral:"🧩 big ideas", emotional:"💔 deep feelings", action:"💥 action",
+  political:"🏴 politics & power", bleak:"🌑 bleakness", hopeful:"🌅 hope",
+  aiconsciousness:"🤖 AI & minds", adventure:"🗺 adventure", translated:"🌐 world SF",
+  cosy:"🫖 cosy vibes", indigenous:"🪶 Indigenous voices", experimental:"🎨 experimental"
+};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let quizBooks = [];
+let answers = {};   // bookId -> weight (number) ; skip not stored
+let idx = 0;
+
+/* =========================================================
+   COUNTER (fake animated, no storage)
+   ========================================================= */
+function renderCounter(n){
+  const s = String(n).padStart(6,"0");
+  document.getElementById("counter").innerHTML =
+    s.split("").map(d=>`<span class="d">${d}</span>`).join("");
+}
+(function animateCounter(){
+  let base = 130417 + Math.floor(Math.random()*900);
+  renderCounter(base);
+  let target = base + 1;
+  let cur = base;
+  const t = setInterval(()=>{ cur++; renderCounter(cur); if(cur>=target){clearInterval(t);} },120);
+})();
+
+/* =========================================================
+   FLOW
+   ========================================================= */
+function show(id){
+  ["intro","quiz","results"].forEach(s=>document.getElementById(s).classList.add("hidden"));
+  const el = document.getElementById(id);
+  el.classList.remove("hidden");
+  el.classList.add("pop");
+  setTimeout(()=>el.classList.remove("pop"),320);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function startQuiz(){
+  quizBooks = QUIZ_IDS.map(id=>BOOKS.find(b=>b.id===id));
+  answers = {};
+  idx = 0;
+  show("quiz");
+  renderBook();
+}
+
+function renderBook(){
+  const b = quizBooks[idx];
+  const total = quizBooks.length;
+  document.getElementById("progbar").style.width = ((idx)/total*100)+"%";
+  document.getElementById("progtxt").textContent = `BOOK ${idx+1} OF ${total}`;
+  document.getElementById("backbtn").style.visibility = idx===0 ? "hidden":"visible";
+
+  const prev = answers[b.id];
+  document.getElementById("bookq").innerHTML = `
+    <div class="qgenre">${b.g}</div>
+    <div class="qtitle">${b.t}</div>
+    <div class="qmeta">${b.a} · ${b.y}</div>
+    <div class="qblurb">${b.b}</div>
+    <div class="rates">
+      ${RATINGS.map(r=>`
+        <button class="rate ${r.key==='skip'?'skip':''}" onclick="answer('${r.key}')">
+          <span class="em">${r.em}</span>${r.label}
+        </button>`).join("")}
+    </div>
+    ${prev!==undefined ? `<div class="smallcaps" style="margin-top:8px;">↳ last time you said: <b>${labelFor(prev)}</b></div>`:""}
+  `;
+  const q = document.getElementById("bookq");
+  q.classList.add("pop"); setTimeout(()=>q.classList.remove("pop"),300);
+}
+
+function labelFor(w){
+  const r = RATINGS.find(r=>r.w===w);
+  return r ? r.label : "—";
+}
+
+function answer(key){
+  const r = RATINGS.find(r=>r.key===key);
+  const b = quizBooks[idx];
+  if(r.w===null){ delete answers[b.id]; }   // "haven't read" = no signal
+  else { answers[b.id] = r.w; }
+  next();
+}
+
+function next(){
+  if(idx < quizBooks.length-1){ idx++; renderBook(); }
+  else { document.getElementById("progbar").style.width="100%"; computeResults(); }
+}
+function prevBook(){ if(idx>0){ idx--; renderBook(); } }
+
+/* =========================================================
+   RECOMMENDATION ENGINE
+   ========================================================= */
+function buildProfile(){
+  const p = {};
+  for(const idStr in answers){
+    const b = BOOKS.find(x=>x.id===Number(idStr));
+    const w = answers[idStr];
+    b.tags.forEach(tag => p[tag] = (p[tag]||0) + w);
+  }
+  return p;
+}
+
+function scoreBook(b, profile, coveredTags){
+  let s = 0;
+  b.tags.forEach(tag=>{
+    let v = profile[tag] || 0;
+    if(coveredTags[tag]) v *= 0.4;          // diversify: down-weight already-covered tags
+    s += v;
+  });
+  return s / Math.sqrt(b.tags.length);       // normalize so tag-heavy books aren't unfairly boosted
+}
+
+function computeResults(){
+  const profile = buildProfile();
+  const rated = new Set(QUIZ_IDS);
+  const pool = BOOKS.filter(b=>!rated.has(b.id));
+
+  const positives = Object.values(profile).filter(v=>v>0);
+  const hasSignal = positives.length>0 && Math.max(...Object.values(profile))>0;
+
+  let picks;
+  if(!hasSignal){
+    // fallback: crowd-pleasing gateway novels across subgenres
+    const fb = [43,79,91,75,69,96].map(id=>BOOKS.find(b=>b.id===id));
+    picks = fb.slice(0,3);
+  } else {
+    picks = [];
+    const covered = {};
+    for(let n=0;n<3;n++){
+      let best=null, bestScore=-1e9;
+      for(const b of pool){
+        if(picks.includes(b)) continue;
+        const sc = scoreBook(b, profile, covered);
+        if(sc>bestScore){ bestScore=sc; best=b; }
+      }
+      if(!best) break;
+      picks.push(best);
+      best.tags.forEach(t=>covered[t]=true);
+    }
+  }
+
+  renderResults(picks, profile, hasSignal);
+}
+
+function topTags(profile, k){
+  return Object.entries(profile)
+    .filter(([t,v])=>v>0)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,k)
+    .map(([t])=>t);
+}
+
+function verdictLine(tags){
+  if(tags.length===0) return "Our sensors couldn't get a clear read — so here are three brilliant gateways. ✨";
+  const names = tags.slice(0,2).map(t=>(TAGNAMES[t]||t).replace(/^[^\sa-zA-Z]+\s/,"")).join(" + ");
+  return `Diagnosis: you're powered by ${names}. The Match-O-Tron has chosen wisely. ✨`;
+}
+
+function whyText(book, profile){
+  const liked = book.tags
+    .filter(t=>(profile[t]||0)>0)
+    .sort((a,b)=>(profile[b]||0)-(profile[a]||0))
+    .slice(0,2)
+    .map(t=>TAGNAMES[t]||t);
+  const reason = liked.length
+    ? `Matches your love of <b>${liked.join("</b> and <b>")}</b>. `
+    : `A celebrated pick to stretch your horizons. `;
+  return reason + book.b;
+}
+
+function renderResults(picks, profile, hasSignal){
+  document.getElementById("verdict").textContent = verdictLine(topTags(profile,3));
+
+  document.getElementById("recs").innerHTML = picks.map((b,i)=>`
+    <div class="reccard">
+      <div class="rank">#${i+1}</div>
+      <h3>${b.t}</h3>
+      <div class="rmeta">${b.a} · ${b.y} · ${b.g}</div>
+      <div class="rwhy">${whyText(b, profile)}</div>
+    </div>
+  `).join("");
+
+  const tt = topTags(profile,5);
+  document.getElementById("profile").innerHTML = hasSignal
+    ? `★ YOUR SCI-FI TASTE PROFILE ★<br>` + tt.map(t=>"▸ "+(TAGNAMES[t]||t)).join("<br>")
+    : `★ YOUR SCI-FI TASTE PROFILE ★<br>▸ undecided — go read one and report back!`;
+
+  show("results");
+}
+
+function resetAll(){ show("intro"); }
+
+/* =========================================================
+   FLAVOR: fake MIDI player + sparkle cursor trail
+   ========================================================= */
+function midiMsg(m){
+  const d = document.getElementById("mididisp");
+  const old = d.textContent;
+  d.textContent = "♫ " + m;
+  setTimeout(()=>{ d.textContent = old; }, 1400);
+}
+
+(function sparkleTrail(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if(matchMedia("(pointer: coarse)").matches) return;  // skip on touch devices
+  let last = 0;
+  window.addEventListener("mousemove", e=>{
+    const now = Date.now();
+    if(now - last < 45) return;       // throttle
+    last = now;
+    const s = document.createElement("div");
+    const colors = ["#ff00ff","#00ffff","#ffff00","#00ff66"];
+    s.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:8px;height:8px;
+      border-radius:50%;pointer-events:none;z-index:9999;
+      background:radial-gradient(circle,${colors[Math.floor(Math.random()*colors.length)]} 0%,transparent 70%);
+      transition:opacity .6s ease-out,transform .6s ease-out;`;
+    document.body.appendChild(s);
+    requestAnimationFrame(()=>{ s.style.opacity="0"; s.style.transform="scale(2.4)"; });
+    setTimeout(()=>s.remove(),600);
+  });
+})();
+</script>

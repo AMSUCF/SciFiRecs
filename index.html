@@ -1,0 +1,355 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>~*~ COSMIC SCI-FI RECS · HOME BASE ~*~</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Righteous&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<style>
+  :root{
+    --neon:#00ffff;
+    --hot:#ff00ff;
+    --gold:#ffcc00;
+    --green:#00ff66;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:#05010f;
+    color:#fff;
+    font-family:'Verdana','Geneva',sans-serif;
+    cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><circle cx="14" cy="14" r="9" fill="%2300ffff" opacity="0.5"/><circle cx="14" cy="14" r="4" fill="%23ff00ff" opacity="0.9"/></svg>'),auto;
+    overflow-x:hidden;
+  }
+  a,button{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><polygon points="14,2 17,11 26,14 17,17 14,26 11,17 2,14 11,11" fill="%23ffff00"/></svg>'),pointer;}
+
+  /* ---- p5 starfield lives behind everything ---- */
+  #starfield{position:fixed;inset:0;z-index:-1;display:block;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:14px;position:relative;z-index:1;}
+
+  /* ---- marquee ---- */
+  .marquee{
+    overflow:hidden;background:#000;border:3px ridge var(--green);
+    box-shadow:0 0 16px rgba(0,255,102,.5);margin-bottom:14px;
+  }
+  .marquee span{
+    display:inline-block;white-space:nowrap;padding:7px 0;
+    font-family:'VT323',monospace;font-size:22px;color:var(--green);
+    text-shadow:0 0 6px var(--green);animation:marq 22s linear infinite;
+  }
+  @keyframes marq{from{transform:translateX(100%);}to{transform:translateX(-100%);}}
+
+  /* ---- panels ---- */
+  .panel{
+    background:linear-gradient(180deg,rgba(26,10,54,.92) 0%,rgba(10,4,32,.92) 100%);
+    border:5px ridge var(--hot);
+    box-shadow:0 0 26px rgba(255,0,255,.45),inset 0 0 24px rgba(0,255,255,.12);
+    padding:22px;margin-bottom:16px;backdrop-filter:blur(1px);
+  }
+  .titlebar{
+    background:linear-gradient(180deg,#000080,#3030ff);
+    border:2px solid;border-color:#fff #000 #000 #fff;
+    color:#fff;font-weight:bold;font-family:'Righteous',sans-serif;
+    padding:5px 10px;margin:-22px -22px 16px -22px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;letter-spacing:1px;
+  }
+  .titlebar .x{
+    background:#c0c0c0;color:#000;border:2px outset #fff;
+    width:20px;height:18px;line-height:14px;text-align:center;font-size:11px;
+  }
+
+  h1.logo{
+    font-family:'Press Start 2P',cursive;
+    font-size:clamp(15px,4.6vw,30px);
+    line-height:1.5;text-align:center;margin:6px 0 4px;
+    background:linear-gradient(90deg,#ff0000,#ff7f00,#ffff00,#00ff00,#00ffff,#4b0082,#9400d3,#ff0000);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:rainbowShift 4s linear infinite;
+    filter:drop-shadow(2px 2px 0 #000);
+  }
+  @keyframes rainbowShift{to{background-position:200% center;}}
+  .sub{
+    text-align:center;font-family:'VT323',monospace;font-size:23px;
+    color:var(--neon);text-shadow:0 0 8px var(--neon);margin:0 0 6px;
+  }
+  .blink{animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  p.lede{font-size:15px;line-height:1.6;text-align:center;}
+  .center{text-align:center;}
+
+  /* ---- buttons ---- */
+  .btn{
+    display:inline-block;padding:14px 30px;margin:8px;
+    font-family:'Righteous',sans-serif;font-size:18px;color:#000;
+    text-shadow:1px 1px 0 rgba(255,255,255,.6);text-decoration:none;
+    background:linear-gradient(180deg,var(--gold) 0%,#ff9900 100%);
+    border:4px solid;border-color:#fff #7a4a00 #7a4a00 #fff;
+    box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),4px 4px 0 rgba(0,0,0,.4);
+    transition:transform .1s,filter .1s;min-height:48px;
+  }
+  .btn:hover{transform:scale(1.05);filter:brightness(1.12);}
+  .btn:active{transform:translate(2px,2px);border-color:#7a4a00 #fff #fff #7a4a00;}
+  .btn.alt{background:linear-gradient(180deg,#00ffff,#0080ff);color:#001;}
+  .btn.big{font-size:22px;padding:18px 40px;animation:glowPulse 1.6s ease-in-out infinite;}
+  @keyframes glowPulse{
+    0%,100%{box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),0 0 18px rgba(255,204,0,.8);}
+    50%{box-shadow:inset 2px 2px 0 rgba(255,255,255,.6),inset -2px -2px 0 rgba(0,0,0,.3),0 0 38px rgba(255,204,0,1),0 0 60px rgba(255,0,255,.6);}
+  }
+
+  /* ---- hit counter ---- */
+  .counter{
+    display:inline-flex;gap:2px;padding:6px 9px;background:#000;
+    border:3px ridge #555;box-shadow:inset 0 0 10px rgba(0,255,0,.3);vertical-align:middle;
+  }
+  .counter .d{
+    width:18px;height:26px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#003300,#001100);border:1px solid var(--green);
+    color:var(--green);font-family:'Courier New',monospace;font-size:18px;font-weight:bold;
+    text-shadow:0 0 7px var(--green);
+  }
+  .smallcaps{font-family:'VT323',monospace;font-size:18px;color:#aaffcc;}
+
+  /* ---- feature cards ---- */
+  .cards{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:6px;}
+  .card{
+    flex:1 1 200px;max-width:240px;padding:14px;
+    background:linear-gradient(135deg,#140833,#241055);
+    border:3px outset #b060ff;box-shadow:2px 2px 0 rgba(0,0,0,.4);
+    transition:transform .12s,filter .12s;
+  }
+  .card:hover{transform:translateY(-4px);filter:brightness(1.2);border-color:#fff;}
+  .card .em{font-size:30px;display:block;margin-bottom:6px;}
+  .card h3{font-family:'Righteous',sans-serif;font-size:18px;margin:0 0 6px;
+    color:var(--gold);text-shadow:0 0 8px rgba(255,204,0,.5);}
+  .card p{font-size:13px;line-height:1.5;color:#dcd0ff;margin:0;}
+
+  /* ---- stat readout box ---- */
+  .profilebox{background:#000;border:3px inset #666;padding:12px;margin:14px 0 4px;
+    font-family:'VT323',monospace;font-size:19px;color:var(--green);text-shadow:0 0 5px var(--green);line-height:1.6;}
+  .profilebox b{color:var(--neon);text-shadow:0 0 5px var(--neon);}
+
+  /* ---- midi flavor ---- */
+  .midi{background:linear-gradient(180deg,#c0c0c0,#808080);border:3px ridge #fff;padding:12px;max-width:380px;margin:0 auto;box-shadow:4px 4px 0 rgba(0,0,0,.4);}
+  .midi .disp{background:#000;border:2px inset #555;padding:7px;color:var(--green);font-family:'Courier New',monospace;text-align:center;text-shadow:0 0 5px var(--green);font-size:13px;}
+  .midi .ctrls{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+  .midi .mb{width:44px;height:34px;background:linear-gradient(180deg,#e8e8e8,#a0a0a0);border:2px outset #fff;font-size:15px;color:#000;}
+  .midi .mb:active{border-style:inset;}
+  .midi .bar{height:8px;background:#000;border:2px inset #555;margin-top:8px;overflow:hidden;}
+  .midi .barfill{height:100%;width:30%;background:linear-gradient(90deg,#00ff00,#00aa00);animation:midip 4s linear infinite;}
+  @keyframes midip{from{transform:translateX(-100%);}to{transform:translateX(400%);}}
+
+  footer{text-align:center;font-family:'VT323',monospace;font-size:17px;color:#9988cc;padding:18px 0 30px;line-height:1.7;}
+  .construction{font-family:'Press Start 2P',cursive;font-size:9px;color:#000;background:repeating-linear-gradient(45deg,#ffcc00,#ffcc00 14px,#000 14px,#000 28px);
+    padding:8px;color:#fff;text-shadow:1px 1px 2px #000;border:2px solid #ff0000;margin:10px auto;display:inline-block;}
+
+  @media (max-width:520px){
+    .panel{padding:16px;} .titlebar{margin:-16px -16px 14px -16px;}
+    .card{flex:1 1 44%;max-width:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;}
+  }
+</style>
+
+<!-- p5.js warp-speed starfield is created in setup() and pinned behind the page -->
+
+<div class="wrap">
+
+  <div class="marquee"><span>★彡 WELCOME TO THE COSMIC SCI-FI RECS HOME BASE 彡★ &nbsp;⟶&nbsp; engage the warp drive &nbsp;⟶&nbsp; 100 hand-picked novels &nbsp;⟶&nbsp; take the MATCH-O-TRON quiz &nbsp;⟶&nbsp; ★彡 best viewed at 800x600 with Netscape Navigator 彡★ &nbsp; ⊹ ⋆ ✦ ⊹ ⋆ ✦ ⊹ &nbsp;</span></div>
+
+  <!-- ============ HERO ============ -->
+  <div class="panel">
+    <div class="titlebar"><span>◆ homebase.exe</span><span class="x">×</span></div>
+    <h1 class="logo">COSMIC SCI-FI RECS</h1>
+    <div class="sub">▓ your portal to the reading multiverse ▓ <span class="blink">_</span></div>
+    <p class="lede">Buckle up, carbon-based reader! 🛸 You've reached mission control for a galaxy of <b style="color:var(--gold)">100 essential sci-fi novels</b>. Let our totally-legit super-computer scan your <b style="color:var(--neon)">brain-vibes</b> and chart a course to your next great read.</p>
+    <div class="center">
+      <span class="construction">⚠ WARP CORE ONLINE SINCE 1997 ⚠</span>
+    </div>
+    <div class="center" style="margin-top:6px;">
+      <a class="btn big" href="scifi-quiz.html">🚀 LAUNCH THE MATCH-O-TRON 🚀</a>
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <span class="smallcaps">travelers warped in: </span>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <!-- ============ FEATURES ============ -->
+  <div class="panel">
+    <div class="titlebar"><span>◆ flight_manifest.dll</span><span class="x">×</span></div>
+    <h1 class="logo" style="font-size:clamp(13px,3.8vw,22px);">✦ WHAT AWAITS IN THE VOID ✦</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="em">🛰</span>
+        <h3>Take the Quiz</h3>
+        <p>Rate a handful of famous novels and the Match-O-Tron 3000 computes your personal sci-fi destiny.</p>
+      </div>
+      <div class="card">
+        <span class="em">🪐</span>
+        <h3>100 Novels</h3>
+        <p>A hand-curated, gloriously diverse reading list spanning 1818 to 2024 — from Frankenstein to Murderbot.</p>
+      </div>
+      <div class="card">
+        <span class="em">🤖</span>
+        <h3>Brain-Vibe Scan</h3>
+        <p>Our "AI" matches your taste profile against the full galaxy and beams back 3 perfect reads.</p>
+      </div>
+    </div>
+    <div class="profilebox center">
+      ★ SHIP'S DATABANK ★<br>
+      ▸ <b>100</b> novels logged &nbsp;·&nbsp; ▸ <b>30+</b> subgenres tagged<br>
+      ▸ <b>3</b> recommendations per scan &nbsp;·&nbsp; ▸ <b>206</b> years of sci-fi
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <a class="btn alt" href="scifi-quiz.html">⟶ START YOUR SCAN ⟵</a>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="midi">
+    <div class="disp" id="mididisp">♫ now playing: warpdrive_loop.mid</div>
+    <div class="ctrls">
+      <button class="mb" onclick="midiMsg('⏮ rewinding...')">⏮</button>
+      <button class="mb" onclick="midiMsg('▶ vibing...')">▶</button>
+      <button class="mb" onclick="midiMsg('⏸ paused')">⏸</button>
+      <button class="mb" onclick="midiMsg('⏭ next track')">⏭</button>
+    </div>
+    <div class="bar"><div class="barfill"></div></div>
+  </div>
+
+  <footer>
+    ✉ sign my guestbook! &nbsp;•&nbsp; 🌐 part of the SCI-FI WEBRING 🌐<br>
+    🏠 <a href="index.html" style="color:#9cf;">home</a> &nbsp;·&nbsp; 🚀 <a href="scifi-quiz.html" style="color:#9cf;">the quiz</a><br>
+    © 19XX–20XX · no books were harmed in the making of this webpage<br>
+    <span style="color:#556;">100% of recommendations sourced from a hand-curated diverse reading list</span>
+  </footer>
+</div>
+
+<script>
+/* =========================================================
+   FAKE HIT COUNTER (animated, no storage)
+   ========================================================= */
+function renderCounter(n){
+  const s = String(n).padStart(6,"0");
+  document.getElementById("counter").innerHTML =
+    s.split("").map(d=>`<span class="d">${d}</span>`).join("");
+}
+(function animateCounter(){
+  let base = 130417 + Math.floor(Math.random()*900);
+  let cur = base, target = base + 1;
+  renderCounter(cur);
+  const t = setInterval(()=>{ cur++; renderCounter(cur); if(cur>=target){clearInterval(t);} },120);
+})();
+
+/* =========================================================
+   FAKE MIDI PLAYER
+   ========================================================= */
+function midiMsg(m){
+  const d = document.getElementById("mididisp");
+  const old = d.textContent;
+  d.textContent = "♫ " + m;
+  setTimeout(()=>{ d.textContent = old; }, 1400);
+}
+
+/* =========================================================
+   SPARKLE CURSOR TRAIL (matches the quiz)
+   ========================================================= */
+(function sparkleTrail(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if(matchMedia("(pointer: coarse)").matches) return;
+  let last = 0;
+  window.addEventListener("mousemove", e=>{
+    const now = Date.now();
+    if(now - last < 45) return;
+    last = now;
+    const s = document.createElement("div");
+    const colors = ["#ff00ff","#00ffff","#ffff00","#00ff66"];
+    s.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:8px;height:8px;
+      border-radius:50%;pointer-events:none;z-index:9999;
+      background:radial-gradient(circle,${colors[Math.floor(Math.random()*colors.length)]} 0%,transparent 70%);
+      transition:opacity .6s ease-out,transform .6s ease-out;`;
+    document.body.appendChild(s);
+    requestAnimationFrame(()=>{ s.style.opacity="0"; s.style.transform="scale(2.4)"; });
+    setTimeout(()=>s.remove(),600);
+  });
+})();
+
+/* =========================================================
+   p5.js WARP-SPEED STARFIELD
+   Stars stream out from the center like a hyperspace jump.
+   Rendered in instance mode onto the fixed background canvas.
+   ========================================================= */
+const starfieldSketch = (p)=>{
+  let stars = [];
+  const NEON = ["#00ffff","#ff00ff","#ffcc00","#00ff66","#ffffff","#ffffff","#9cf0ff"];
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  class Star{
+    constructor(){ this.reset(true); }
+    reset(initial){
+      // position in 3D-ish space; z is depth
+      this.x = p.random(-p.width, p.width);
+      this.y = p.random(-p.height, p.height);
+      this.z = initial ? p.random(p.width) : p.width;
+      this.pz = this.z;
+      this.col = p.color(p.random(NEON)); // p5 random() picks a random array element
+    }
+    update(speed){
+      this.z -= speed;
+      if(this.z < 1){ this.reset(false); }
+    }
+    show(){
+      // project 3D point onto 2D screen
+      const sx = p.map(this.x / this.z, 0, 1, 0, p.width);
+      const sy = p.map(this.y / this.z, 0, 1, 0, p.height);
+      const r = p.map(this.z, 0, p.width, 3.2, 0);
+
+      // streak: previous projected position
+      const px = p.map(this.x / this.pz, 0, 1, 0, p.width);
+      const py = p.map(this.y / this.pz, 0, 1, 0, p.height);
+      this.pz = this.z;
+
+      const alpha = p.map(this.z, 0, p.width, 255, 40);
+      this.col.setAlpha(alpha);
+
+      p.stroke(this.col);
+      p.strokeWeight(r);
+      p.line(px, py, sx, sy);
+
+      p.noStroke();
+      this.col.setAlpha(255);
+      p.fill(this.col);
+      p.circle(sx, sy, r);
+    }
+  }
+
+  p.setup = ()=>{
+    const c = p.createCanvas(p.windowWidth, p.windowHeight);
+    c.id("starfield");            // CSS pins #starfield behind the content
+    c.parent(document.body);
+    const count = Math.min(420, Math.floor(p.windowWidth * p.windowHeight / 3200));
+    for(let i=0;i<count;i++) stars.push(new Star());
+    if(reduce){ p.noLoop(); } // draw a single static frame for reduced-motion
+  };
+
+  p.draw = ()=>{
+    p.background(5, 1, 15, reduce ? 255 : 38); // translucent trail = motion-blur glow
+    p.translate(p.width/2, p.height/2);
+    // gentle warp pulse; faster when the pointer is near the canvas
+    const base = 4;
+    const pulse = reduce ? 0 : 2 * Math.sin(p.frameCount * 0.02);
+    const speed = base + pulse;
+    for(const s of stars){ s.update(reduce ? 0 : speed); s.show(); }
+  };
+
+  p.windowResized = ()=>{
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
+};
+new p5(starfieldSketch);
+</script>
